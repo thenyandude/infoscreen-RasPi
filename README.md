@@ -12,8 +12,6 @@ Jeg vil helst prøve å holde meg til MVC modellen, og bruke low coupling high c
 Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvor du kan...
 
 **Utfordringer**
-Identifiser potensielle utfordringer i prosjektoppgaven. Opprett et skjema som beskriver disse utfordringene.
-
 | Oppgave                | Potensielle Utfordringer                                        |
 |------------------------|-----------------------------------------------------------------|
 | Planlegging            | Velge riktige teknologier                                       |
@@ -21,8 +19,6 @@ Identifiser potensielle utfordringer i prosjektoppgaven. Opprett et skjema som b
 | Frontend-utvikling     | Integrere React-komponenter uten problemer / bugs               |
 
 **Tidsplan**
-Lag en oversikt over tiden du forventer å bruke på hver fase av prosjektet.
-
 | Fase                   | Forventet Tidsbruk |
 |------------------------|--------------------|
 | Prosjektplanlegging    | 4 timer            |
