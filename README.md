@@ -35,9 +35,15 @@ Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvor du 
 **Milepæl 2 - Konsept**
 
 1. **Oversikt over tredjepartsprogramvare:**
-   Gi en liste og korte beskrivelser av eventuell tredjepartsprogramvare eller biblioteker som skal integreres i prosjektet. Dette kan inkludere verktøy for filbehandling, sikkerhet eller andre funksjoner som styrker kjerne-teknologiene.
-
-2. **Beskrivelse av prototypen:**
+    MongoDB,
+    Mongoose,
+    Express,
+    React,
+    RasberryPI3B+,
+    Node.js,
+    npm: Node Package Manager,
+   
+3. **Beskrivelse av prototypen:**
 
    **Prototypens Funksjonaliteter:**
 
