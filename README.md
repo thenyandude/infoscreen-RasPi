@@ -7,6 +7,7 @@
 - **Frontend:** React, RasberryPI3B+
 
 **Overordnet Tilnærming**
+
 Jeg vil helst prøve å holde meg til MVC modellen, og bruke low coupling high cohesion konseptet.
 
 Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvor du kan...
