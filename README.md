@@ -1,16 +1,18 @@
-Milepæl 1 - Prosjektplanlegging
+**Milepæl 1 - Prosjektplanlegging**
 
-Prosjektbeskrivelse
+**Prosjektbeskrivelse**
 
-Teknologier
-  Backend: Node.js, MongoDB, VMWare
-  Frontend: React, RasberryPI3B+
+**Teknologier**
+- **Backend:** Node.js, MongoDB, VMWare
+- **Frontend:** React, RasberryPI3B+
 
-Overordnet Tilnærming
-  Jeg vil helst prøve å holde meg til MVC modellen, og bruke low coupling high cohesion konseptet
+**Overordnet Tilnærming**
+Jeg vil helst prøve å holde meg til MVC modellen, og bruke low coupling high cohesion konseptet.
 
-  Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvpr du kan 
-  
+Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvor du kan...
+
+**Utfordringer**
+Identifiser potensielle utfordringer i prosjektoppgaven. Opprett et skjema som beskriver disse utfordringene.
 
 | Oppgave                | Potensielle Utfordringer                                        |
 |------------------------|-----------------------------------------------------------------|
@@ -18,8 +20,8 @@ Overordnet Tilnærming
 | Backend-implementering | Database implementering, dytte og lese data, og sikre databasen |
 | Frontend-utvikling     | Integrere React-komponenter uten problemer / bugs               |
 
-
-
+**Tidsplan**
+Lag en oversikt over tiden du forventer å bruke på hver fase av prosjektet.
 
 | Fase                   | Forventet Tidsbruk |
 |------------------------|--------------------|
