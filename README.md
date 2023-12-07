@@ -42,6 +42,10 @@ Jeg har lyst til å prøve å lage en grafisk versjon av admin panelet, hvor du 
     RasberryPI3B+,
     Node.js,
     npm: Node Package Manager,
+    VsCode IDE
+
+https://lucid.app/lucidchart/77f50d92-d68e-4da5-9df6-5ed699d94ba1/edit?beaconFlowId=1F62EE424217D979&invitationId=inv_2148bedc-531a-4f84-b816-59b50152c550&page=0_0#
+    
    
 3. **Beskrivelse av prototypen:**
 
