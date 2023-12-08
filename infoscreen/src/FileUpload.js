@@ -45,9 +45,13 @@ const handleSubmit = async () => {
     }
   
     const formData = new FormData();
+    let ImageArray = [];
     files.forEach((file, index) => {
-      formData.append(`file-${fileOrder[file.name]}`, file);
+      //formData.append(`file-${fileOrder[file.name]}`, file);
+      ImageArray.push(file)
     });
+
+    formData.append(ImageArray);
   
     // Include duration in the form data
     formData.append('duration', duration);
