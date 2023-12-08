@@ -1,0 +1,25 @@
+/* FileUploadForm.css */
+.dropzone {
+    border: 2px dashed #aaaaaa;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .dropzone p {
+    margin: 0;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  li input {
+    margin-left: 10px;
+  }
+  
