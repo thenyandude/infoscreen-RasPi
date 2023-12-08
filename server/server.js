@@ -6,9 +6,12 @@ require("dotenv/config")
 const port = process.env.PORT || 3001;
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
+
 
 app.use(express.json());
+
+
 
 app.use(function (req, res, next) {
   res.header("Content-Type", "application/json;charset=UTF-8");
@@ -25,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("Jobb gutta")
 })
 
-app.post('/upload', upload.single('fileData'), (req, res) => {
+app.post('/upload', upload.array("photos", 5), (req, res) => {
   try {
     const jsonData = JSON.parse(req.file.buffer.toString());
 
