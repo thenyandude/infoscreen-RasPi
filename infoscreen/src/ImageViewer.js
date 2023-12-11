@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const ImageViewer = () => {
   const [imagePaths, setImagePaths] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -11,6 +12,7 @@ const ImageViewer = () => {
         const response = await fetch('http://localhost:3001/getImages');
         if (response.ok) {
           const data = await response.json();
+          console.log('Fetched images:', data.uploadedFiles);
           setImagePaths(data.uploadedFiles);
         } else {
           console.error('Error fetching images:', response.statusText);
@@ -21,18 +23,30 @@ const ImageViewer = () => {
     };
 
     fetchImages();
-  }, []);
+  }, []); // Removed imagePaths and currentImageIndex from the dependency array
+
+  useEffect(() => {
+    if (imagePaths.length > 0) {
+      const initialDuration = parseInt(imagePaths[currentImageIndex].duration, 10) || 5000;
+
+      const intervalId = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagePaths.length);
+      }, initialDuration);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [imagePaths, currentImageIndex]); // Updated dependency array
 
   return (
     <div>
       <h2>Image Viewer</h2>
-      {imagePaths.map((path, index) => (
+      {imagePaths.length > 0 && (
         <img
-          key={index}
-          src={`http://localhost:3001/imgs/${path}`} // Update the path to match your server setup
-          alt={`Image ${index + 1}`}
+          key={currentImageIndex}
+          src={`http://localhost:3001/imgs/${imagePaths[currentImageIndex]?.path}`}
+          alt={`Image ${currentImageIndex + 1}`}
         />
-      ))}
+      )}
     </div>
   );
 };
