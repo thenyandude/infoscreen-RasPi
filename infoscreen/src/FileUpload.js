@@ -8,8 +8,8 @@ const FileUploadForm = () => {
   const [duration, setDuration] = useState('');
 
   const onDrop = useCallback((acceptedFiles) => {
-    setFiles([...files, ...acceptedFiles]);
-  }, [files]);
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -30,41 +30,33 @@ const FileUploadForm = () => {
     setDuration(e.target.value);
   };
 
- // ...
-
-const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const uniqueOrderNumbers = new Set(Object.values(fileOrder));
     if (uniqueOrderNumbers.size !== files.length) {
       alert('Each file must have a unique order number.');
       return;
     }
-  
-    if (!duration) {
+
+    if (!duration.trim()) {
       alert('Please enter a duration in milliseconds.');
       return;
     }
-  
+
     const formData = new FormData();
-    let ImageArray = [];
+
     files.forEach((file, index) => {
-      //formData.append(`file-${fileOrder[file.name]}`, file);
-      ImageArray.push(file)
+      formData.append('photos', file);
     });
 
-    formData.append(ImageArray);
-  
-    // Include duration in the form data
     formData.append('duration', duration);
-  
+
     try {
-      // Replace 'YOUR_API_ENDPOINT' with the actual endpoint
       const response = await fetch('http://localhost:3001/upload', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (response.ok) {
-        // Optionally, reset the form state after successful submission
         setFiles([]);
         setFileOrder({});
         setDuration('');
@@ -76,9 +68,6 @@ const handleSubmit = async () => {
       console.error('Error submitting files:', error);
     }
   };
-  
-  // ...
-  
 
   return (
     <div>
