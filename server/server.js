@@ -18,9 +18,8 @@ const upload = multer({
   storage: storage,
 }).array('photos', 2);
 
-let uploadedImages = []; // Array to store uploaded image paths
-
-
+// Inside your server code
+let uploadedImages = []; // Array to store uploaded image paths and a single duration
 
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
@@ -28,30 +27,33 @@ app.post('/upload', (req, res) => {
       console.error(err);
       res.status(500).send('Internal Server Error');
     } else {
-      const fileNames = req.files.map((file) => file.originalname);
+      const fileNames = req.files.map((file) => ({
+        path: file.originalname,
+        duration: req.body.duration,
+      }));
       uploadedImages = [...uploadedImages, ...fileNames];
       console.log('Files received:', fileNames);
+      
       console.log('Duration received:', req.body.duration);
       res.send('Files uploaded');
     }
   });
 });
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
-app.use('/imgs', express.static(path.join(__dirname, 'public', 'imgs')));
-
-// Inside your server code
-function getUploadedImages() {
-  return uploadedImages;
-}
-
 app.get('/getImages', (req, res) => {
   const imagePaths = getUploadedImages();
   res.json({ uploadedFiles: imagePaths }); // Sending the imagePaths in the response
 });
 
+function getUploadedImages() {
+  return uploadedImages;
+}
 
+
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+app.use('/imgs', express.static(path.join(__dirname, 'public', 'imgs')));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
