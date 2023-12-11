@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import FileUpload from './FileUpload'; // Import your FileUploadForm component
-import ImageViewer from './ImageViewer'; // Import your ImageViewer component
+import FileUpload from './FileUpload';
+import ImageViewer from './ImageViewer';
 
 const App = () => {
   return (

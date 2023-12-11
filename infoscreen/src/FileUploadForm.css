@@ -1,25 +1,43 @@
 /* FileUploadForm.css */
+
+.file-upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* FileUploadForm.css */
+
 .dropzone {
-    border: 2px dashed #aaaaaa;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-  }
-  
-  .dropzone p {
-    margin: 0;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  li input {
-    margin-left: 10px;
-  }
-  
+  border: 4px dashed #838383;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px; /* Add margin for separation */
+  height: 200px; /* Set the desired height */
+  width: 300px; /* Set the desired width */
+}
+
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Remove default margin for the list */
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+button {
+  display: block;
+  margin-top: 10px;
+}

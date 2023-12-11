@@ -1,6 +1,7 @@
 // ImageViewer.js
 
 import React, { useState, useEffect } from 'react';
+import './ImageViewer.css';
 
 const ImageViewer = () => {
   const [imagePaths, setImagePaths] = useState([]);
