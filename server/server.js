@@ -16,10 +16,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-}).array('photos', 2);
+}).array('photos', 10);
 
-// Inside your server code
-let uploadedImages = []; // Array to store uploaded image paths and a single duration
+let uploadedImages = [];
 
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
@@ -27,13 +26,14 @@ app.post('/upload', (req, res) => {
       console.error(err);
       res.status(500).send('Internal Server Error');
     } else {
-      const fileNames = req.files.map((file) => ({
+      const fileNames = req.files.map((file, index) => ({
+        _id: index.toString(),
         path: file.originalname,
         duration: req.body.duration,
+        order: index + 1,
       }));
       uploadedImages = [...uploadedImages, ...fileNames];
       console.log('Files received:', fileNames);
-      
       console.log('Duration received:', req.body.duration);
       res.send('Files uploaded');
     }
@@ -42,17 +42,50 @@ app.post('/upload', (req, res) => {
 
 app.get('/getImages', (req, res) => {
   const imagePaths = getUploadedImages();
-  res.json({ uploadedFiles: imagePaths }); // Sending the imagePaths in the response
+  res.json({ uploadedFiles: imagePaths });
 });
 
 function getUploadedImages() {
   return uploadedImages;
 }
 
+app.put('/updateOrder/:imageId/:newOrder', (req, res) => {
+  const { imageId, newOrder } = req.params;
+  const imageToUpdate = uploadedImages.find((image) => image._id === imageId);
 
+  if (imageToUpdate) {
+    imageToUpdate.order = parseInt(newOrder, 10);
+    res.send('Order updated');
+  } else {
+    res.status(404).send('Image not found');
+  }
+});
+
+app.put('/updateDuration/:imageId/:newDuration', (req, res) => {
+  const { imageId, newDuration } = req.params;
+  const imageToUpdate = uploadedImages.find((image) => image._id === imageId);
+
+  if (imageToUpdate) {
+    imageToUpdate.duration = parseInt(newDuration, 10);
+    res.send('Duration updated');
+  } else {
+    res.status(404).send('Image not found');
+  }
+});
+
+app.delete('/removeImage/:imageId', (req, res) => {
+  const { imageId } = req.params;
+  const imageIndex = uploadedImages.findIndex((image) => image._id === imageId);
+
+  if (imageIndex !== -1) {
+    uploadedImages.splice(imageIndex, 1);
+    res.send('Image removed');
+  } else {
+    res.status(404).send('Image not found');
+  }
+});
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
 app.use('/imgs', express.static(path.join(__dirname, 'public', 'imgs')));
 
 const PORT = process.env.PORT || 3001;

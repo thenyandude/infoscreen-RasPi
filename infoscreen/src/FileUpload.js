@@ -1,8 +1,9 @@
+// FileUploadForm.js
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './FileUploadForm.css';
 
-const FileUploadForm = () => {
+const FileUploadForm = ({ onUpload }) => {
   const [files, setFiles] = useState([]);
   const [fileOrder, setFileOrder] = useState({});
   const [duration, setDuration] = useState('');
@@ -23,6 +24,17 @@ const FileUploadForm = () => {
       newFiles.sort((a, b) => newFileOrder[a.name] - newFileOrder[b.name]);
 
       setFiles(newFiles);
+    }
+  };
+
+  const handleRemoveFile = (fileName) => {
+    const newFiles = files.filter((file) => file.name !== fileName);
+    setFiles(newFiles);
+
+    if (fileOrder[fileName]) {
+      const newFileOrder = { ...fileOrder };
+      delete newFileOrder[fileName];
+      setFileOrder(newFileOrder);
     }
   };
 
@@ -78,7 +90,12 @@ const FileUploadForm = () => {
       <ul>
         {files.map((file, index) => (
           <li key={index}>
-            <span>{file.name}</span>
+            <button onClick={() => handleRemoveFile(file.name)}>Remove</button>
+            <img
+              src={URL.createObjectURL(file)}
+              alt={file.name}
+              style={{ width: '100px', height: '100px'}}
+            />
             <input
               type="number"
               value={fileOrder[file.name] || ''}

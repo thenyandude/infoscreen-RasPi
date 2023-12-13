@@ -1,0 +1,17 @@
+/* Add this CSS to your stylesheet or component styles */
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.image-item {
+  position: relative;
+  overflow: hidden; /* Ensure images don't overflow their container */
+}
+
+.image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

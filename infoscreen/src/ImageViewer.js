@@ -40,7 +40,6 @@ const ImageViewer = () => {
 
   return (
     <div>
-      <h2>Image Viewer</h2>
       {imagePaths.length > 0 && (
         <img
           key={currentImageIndex}

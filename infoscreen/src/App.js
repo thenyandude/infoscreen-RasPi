@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import ImageViewer from './ImageViewer';
+import FileManager from './FileManager';
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/upload" element={<FileUpload />} />
         <Route path="/v" element={<ImageViewer />} />
+        <Route path ="/" element = {<FileManager/>}/>
       </Routes>
     </Router>
   );
