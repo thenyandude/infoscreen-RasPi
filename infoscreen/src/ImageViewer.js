@@ -1,5 +1,3 @@
-// ImageViewer.js
-
 import React, { useState, useEffect } from 'react';
 import './ImageViewer.css';
 
@@ -14,7 +12,11 @@ const ImageViewer = () => {
         if (response.ok) {
           const data = await response.json();
           console.log('Fetched images:', data.uploadedFiles);
-          setImagePaths(data.uploadedFiles);
+
+          // Sort images based on the 'order' property
+          const sortedImages = data.uploadedFiles.sort((a, b) => a.order - b.order);
+
+          setImagePaths(sortedImages);
         } else {
           console.error('Error fetching images:', response.statusText);
         }
@@ -24,7 +26,7 @@ const ImageViewer = () => {
     };
 
     fetchImages();
-  }, []); // Removed imagePaths and currentImageIndex from the dependency array
+  }, []);
 
   useEffect(() => {
     if (imagePaths.length > 0) {
@@ -36,7 +38,7 @@ const ImageViewer = () => {
 
       return () => clearInterval(intervalId);
     }
-  }, [imagePaths, currentImageIndex]); // Updated dependency array
+  }, [imagePaths, currentImageIndex]);
 
   return (
     <div>

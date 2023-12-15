@@ -27,11 +27,16 @@ const FileManager = () => {
     try {
       const response = await fetch(`http://localhost:3001/updateOrder/${imageId}/${newOrder}`, {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ order: newOrder }),
       });
-
+  
       if (response.ok) {
-        fetchImages();
         console.log('Order updated successfully!');
+        // If the update is successful, fetch the images again to reflect changes
+        fetchImages();
       } else {
         console.error('Error updating order:', response.statusText);
       }
@@ -39,6 +44,9 @@ const FileManager = () => {
       console.error('Error updating order:', error);
     }
   };
+  
+  
+  
 
   const handleDurationChange = async (imageId, newDuration) => {
     try {
