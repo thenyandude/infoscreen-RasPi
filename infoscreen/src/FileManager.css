@@ -16,3 +16,13 @@
   height: 100%;
   object-fit: cover;
 }
+
+button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  width: 100px;
+  margin: 5px;
+}

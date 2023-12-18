@@ -16,7 +16,6 @@ const ImageViewer = () => {
           // Sort media items based on the 'order' property
           const sortedMedia = data.uploadedMedia.sort((a, b) => a.order - b.order);
 
-          // Update the state with the sorted media items
           setMediaItems(sortedMedia);
         } else {
           console.error('Error fetching media:', response.statusText);
@@ -27,7 +26,7 @@ const ImageViewer = () => {
     };
 
     fetchMedia();
-  }, []); // Make sure the dependency array is empty to run the effect only once
+  }, []);
 
   useEffect(() => {
     if (mediaItems.length > 0) {
@@ -40,6 +39,15 @@ const ImageViewer = () => {
       return () => clearInterval(intervalId);
     }
   }, [mediaItems, currentMediaIndex]);
+
+  const handleVideoClick = () => {
+    const videoElement = document.getElementById('mediaVideo');
+    if (videoElement) {
+      videoElement.requestFullscreen().then(() => {
+        videoElement.play();
+      });
+    }
+  };
 
   return (
     <div>
@@ -54,13 +62,17 @@ const ImageViewer = () => {
             />
           ) : (
             // Display video
-            <video
-              key={currentMediaIndex}
-              src={`http://localhost:3001/media/${mediaItems[currentMediaIndex]?.path}`}
-              type="video/mp4"
-              autoPlay
-              controls
-            />
+            <div onClick={handleVideoClick}>
+              <video
+                key={currentMediaIndex}
+                id="mediaVideo"
+                src={`http://localhost:3001/media/${mediaItems[currentMediaIndex]?.path}`}
+                type="video/mp4"
+                muted
+                autoPlay
+                controls
+              />
+            </div>
           )}
 
           {/* Display optional text */}
