@@ -16,6 +16,7 @@ const ImageViewer = () => {
           // Sort media items based on the 'order' property
           const sortedMedia = data.uploadedMedia.sort((a, b) => a.order - b.order);
 
+          // Update the state with the sorted media items
           setMediaItems(sortedMedia);
         } else {
           console.error('Error fetching media:', response.statusText);
@@ -26,7 +27,7 @@ const ImageViewer = () => {
     };
 
     fetchMedia();
-  }, []);
+  }, []); // Make sure the dependency array is empty to run the effect only once
 
   useEffect(() => {
     if (mediaItems.length > 0) {
