@@ -1,4 +1,3 @@
-// FileUploadForm.js
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './FileUploadForm.css';
@@ -6,7 +5,10 @@ import './FileUploadForm.css';
 const FileUploadForm = ({ onUpload }) => {
   const [files, setFiles] = useState([]);
   const [fileOrder, setFileOrder] = useState({});
+  const [durations, setDurations] = useState({});
+  const [texts, setTexts] = useState({});
   const [duration, setDuration] = useState('');
+  const [text, setText] = useState('');
 
   const onDrop = useCallback((acceptedFiles) => {
     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
@@ -42,6 +44,18 @@ const FileUploadForm = ({ onUpload }) => {
     setDuration(e.target.value);
   };
 
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleFileDurationChange = (fileId, duration) => {
+    setDurations((prevDurations) => ({ ...prevDurations, [fileId]: duration }));
+  };
+
+  const handleFileTextChange = (fileId, text) => {
+    setTexts((prevTexts) => ({ ...prevTexts, [fileId]: text }));
+  };
+
   const handleSubmit = async () => {
     const uniqueOrderNumbers = new Set(Object.values(fileOrder));
     if (uniqueOrderNumbers.size !== files.length) {
@@ -49,18 +63,13 @@ const FileUploadForm = ({ onUpload }) => {
       return;
     }
 
-    if (!duration.trim()) {
-      alert('Please enter a duration in milliseconds.');
-      return;
-    }
-
     const formData = new FormData();
 
     files.forEach((file, index) => {
-      formData.append('photos', file);
+      formData.append('media', file);
+      formData.append(`duration_${index}`, durations[file.name] || ''); // Append duration for each file
+      formData.append(`text_${index}`, texts[file.name] || ''); // Append text for each file
     });
-
-    formData.append('duration', duration);
 
     try {
       const response = await fetch('http://localhost:3001/upload', {
@@ -71,7 +80,10 @@ const FileUploadForm = ({ onUpload }) => {
       if (response.ok) {
         setFiles([]);
         setFileOrder({});
+        setDurations({});
+        setTexts({});
         setDuration('');
+        setText('');
         console.log('Files submitted successfully!');
       } else {
         console.error('Error submitting files:', response.statusText);
@@ -94,7 +106,7 @@ const FileUploadForm = ({ onUpload }) => {
             <img
               src={URL.createObjectURL(file)}
               alt={file.name}
-              style={{ width: '100px', height: '100px'}}
+              style={{ width: '100px', height: '100px' }}
             />
             <input
               type="number"
@@ -102,13 +114,27 @@ const FileUploadForm = ({ onUpload }) => {
               onChange={(e) => handleFileOrderChange(file.name, e.target.value)}
               placeholder="Order"
             />
+            <label>
+              Duration for media {index + 1} (ms):
+              <input
+                type="number"
+                value={durations[file.name] || ''}
+                onChange={(e) => handleFileDurationChange(file.name, e.target.value)}
+                placeholder="Enter duration"
+              />
+            </label>
+            <label>
+              Optional Text for media {index + 1}:
+              <input
+                type="text"
+                value={texts[file.name] || ''}
+                onChange={(e) => handleFileTextChange(file.name, e.target.value)}
+                placeholder="Enter text"
+              />
+            </label>
           </li>
         ))}
       </ul>
-      <label>
-        Duration per image (ms):
-        <input type="number" value={duration} onChange={handleDurationChange} placeholder="Enter duration" />
-      </label>
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );

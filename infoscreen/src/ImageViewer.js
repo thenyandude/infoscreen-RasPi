@@ -2,52 +2,69 @@ import React, { useState, useEffect } from 'react';
 import './ImageViewer.css';
 
 const ImageViewer = () => {
-  const [imagePaths, setImagePaths] = useState([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mediaItems, setMediaItems] = useState([]);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchMedia = async () => {
       try {
-        const response = await fetch('http://localhost:3001/getImages');
+        const response = await fetch('http://localhost:3001/getMedia');
         if (response.ok) {
           const data = await response.json();
-          console.log('Fetched images:', data.uploadedFiles);
+          console.log('Fetched media:', data.uploadedMedia);
 
-          // Sort images based on the 'order' property
-          const sortedImages = data.uploadedFiles.sort((a, b) => a.order - b.order);
+          // Sort media items based on the 'order' property
+          const sortedMedia = data.uploadedMedia.sort((a, b) => a.order - b.order);
 
-          setImagePaths(sortedImages);
+          setMediaItems(sortedMedia);
         } else {
-          console.error('Error fetching images:', response.statusText);
+          console.error('Error fetching media:', response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching images:', error);
+        console.error('Error fetching media:', error);
       }
     };
 
-    fetchImages();
+    fetchMedia();
   }, []);
 
   useEffect(() => {
-    if (imagePaths.length > 0) {
-      const initialDuration = parseInt(imagePaths[currentImageIndex].duration, 10) || 5000;
+    if (mediaItems.length > 0) {
+      const initialDuration = parseInt(mediaItems[currentMediaIndex].duration, 10) || 5000;
 
       const intervalId = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagePaths.length);
+        setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % mediaItems.length);
       }, initialDuration);
 
       return () => clearInterval(intervalId);
     }
-  }, [imagePaths, currentImageIndex]);
+  }, [mediaItems, currentMediaIndex]);
 
   return (
     <div>
-      {imagePaths.length > 0 && (
-        <img
-          key={currentImageIndex}
-          src={`http://localhost:3001/imgs/${imagePaths[currentImageIndex]?.path}`}
-          alt={`Image ${currentImageIndex + 1}`}
-        />
+      {mediaItems.length > 0 && (
+        <div>
+          {mediaItems[currentMediaIndex]?.type === 'image' ? (
+            // Display image
+            <img
+              key={currentMediaIndex}
+              src={`http://localhost:3001/media/${mediaItems[currentMediaIndex]?.path}`}
+              alt={`Image ${currentMediaIndex + 1}`}
+            />
+          ) : (
+            // Display video
+            <video
+              key={currentMediaIndex}
+              src={`http://localhost:3001/media/${mediaItems[currentMediaIndex]?.path}`}
+              type="video/mp4"
+              autoPlay
+              controls
+            />
+          )}
+
+          {/* Display optional text */}
+          <div>{mediaItems[currentMediaIndex]?.text}</div>
+        </div>
       )}
     </div>
   );
