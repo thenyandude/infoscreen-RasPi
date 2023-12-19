@@ -8,10 +8,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/upload" element={<FileUpload />} />
         <Route path="/v" element={<ImageViewer />} />
-        <Route path ="/" element = {<FileManager/>}/>
-      </Routes>
+        <Route path="/upload" element={<FileUpload/>} />
+        <Route path="/" element={<FileManager/>}   />
+        </Routes>
     </Router>
   );
 };
