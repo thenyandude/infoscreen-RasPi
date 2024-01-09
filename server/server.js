@@ -138,10 +138,10 @@ app.delete('/removeMedia/:mediaId', (req, res) => {
 
 app.use('/media', express.static(path.join(__dirname, 'public', 'media')));
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 
